@@ -84,6 +84,9 @@ public class AugmentedMatrix {
                 if (row == currentRow) {
                     continue;
                 }
+                if (m1.getPoint(row, currentColumn).equals(Fraction.ZERO)) {
+                    continue;
+                }
                 m1.subtractRows(row, currentRow);
                 m2.subtractRows(row, currentRow);
                 System.out.println("R" + row + " - " + "R" + currentRow);
