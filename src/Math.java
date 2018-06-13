@@ -17,6 +17,13 @@ public class Math {
         }
     }
     
+    public static int divide(int a, int b) {
+        if (b == 0) {
+            throw new ArithmeticException("Division by 0");
+        }
+        return a / b;
+    }
+    
     public static int factorial(int a) {
         if (a < 0) {
             throw new IllegalArgumentException("Negative factorial");
@@ -49,6 +56,10 @@ public class Math {
     
     public static int mod(int a, int b) {
         return a % b;
+    }
+    
+    public static int multiply(int a, int b) {
+        return a * b;
     }
     
     public static int negate(int a) {

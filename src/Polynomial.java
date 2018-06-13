@@ -77,26 +77,6 @@ public class Polynomial {
         }
         copies.removeIf(copy -> copy.getCoefficient().isZero());
         return new Polynomial(copies);
-        
-        /*
-        List<Term> copies = new ArrayList<>();
-        for (Term term : terms) {
-            boolean containedInOriginal = false;
-            for (int i = 0; i < copies.size(); i++) {
-                if (copies.get(i).getVariable().equals(term.getVariable()) &&
-                        copies.get(i).getPower() == term.getPower()) {
-                    containedInOriginal = true;
-                    copies.set(i, new Term(copies.get(i).getCoefficient().add(term.getCoefficient()),
-                            copies.get(i).getVariable(), copies.get(i).getPower() + term.getPower()));
-                }
-            }
-            if (!containedInOriginal) {
-                copies.add(term);
-            }
-        }
-        copies.removeIf(copy -> copy.getCoefficient().isZero());
-        return new Polynomial(copies);
-        */
     }
     
     public void sort() {
