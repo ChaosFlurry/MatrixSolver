@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Polynomial {
     private List<Term> terms;
@@ -32,6 +30,8 @@ public class Polynomial {
     }
     
     public Polynomial multiply(Polynomial polynomial) {
+        return null;
+        /*
         List<Term> newTerms = new ArrayList<>();
         for (int i = 0; i < this.terms.size(); i++) {
             for (int j = 0; j < polynomial.getTerms().size(); j++) {
@@ -44,14 +44,15 @@ public class Polynomial {
             }
         }
         return new Polynomial(newTerms);
+        */
     }
     
     public Polynomial divide(Polynomial polynomial) {
-    
+        return null;
     }
     
     public Polynomial expand() {
-    
+        return null;
     }
     
     public Polynomial factor() {
@@ -60,6 +61,24 @@ public class Polynomial {
     }
     
     public Polynomial simplify() {
+        List<Term> copies = new ArrayList<>(terms);
+        for (int i = 0; i < copies.size(); i++) {
+            Term term1 = copies.get(i);
+            for (int j = i + 1; j < copies.size(); j++) {
+                Term term2 = copies.get(j);
+                if (term1.getVariablePowerMap().equals(term2.getVariablePowerMap())) {
+                    Fraction newCoefficient = term1.getCoefficient().add(term2.getCoefficient());
+                    Map<String, Integer> newVariables = new HashMap<>(term1.getVariablePowerMap());
+                    newVariables.forEach((v, p) -> term2.getVariablePowerMap().merge(v, p, Math::add));
+                    copies.set(i, new Term(newCoefficient, newVariables));
+                    copies.set(j, new Term(Fraction.ZERO, term2.getVariablePowerMap()));
+                }
+            }
+        }
+        copies.removeIf(copy -> copy.getCoefficient().isZero());
+        return new Polynomial(copies);
+        
+        /*
         List<Term> copies = new ArrayList<>();
         for (Term term : terms) {
             boolean containedInOriginal = false;
@@ -77,10 +96,11 @@ public class Polynomial {
         }
         copies.removeIf(copy -> copy.getCoefficient().isZero());
         return new Polynomial(copies);
+        */
     }
     
     public void sort() {
-        terms.sort(Comparator.comparing(Term::getPower).reversed().thenComparing(Term::getVariable));
+        terms.sort(Comparator.comparing(Term::getDegree).reversed().thenComparing(Term::getNumberOfVariables));
     }
     
     @Override

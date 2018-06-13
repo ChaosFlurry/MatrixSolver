@@ -3,6 +3,10 @@ public class Math {
         return (a < 0) ? -a : a;
     }
     
+    public static int add(int a, int b) {
+        return a + b;
+    }
+    
     public static int compare(int a, int b) {
         if (a < b) {
             return -1;
@@ -67,5 +71,9 @@ public class Math {
     
     public static int signum(int a) {
         return Math.compare(a, 0);
+    }
+    
+    public static int subtract(int a, int b) {
+        return a - b;
     }
 }

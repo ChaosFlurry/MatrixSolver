@@ -1,13 +1,13 @@
+import java.util.Map;
+
 public class Term {
     private Fraction coefficient;
-    private String variable;
-    private int power;
+    private Map<String, Integer> variablePowerMap;
     // TODO implement logarithms and trig functions
     
-    public Term(Fraction coefficient, String variable, int power) {
+    public Term(Fraction coefficient, Map<String, Integer> variablePowerMap) {
         this.coefficient = coefficient;
-        this.variable = variable;
-        this.power = power;
+        this.variablePowerMap = variablePowerMap;
     }
     
     public Fraction getCoefficient() {
@@ -18,56 +18,57 @@ public class Term {
         this.coefficient = coefficient;
     }
     
-    public String getVariable() {
-        return variable;
+    public Map<String, Integer> getVariablePowerMap() {
+        return variablePowerMap;
     }
     
-    public void setVariable(String variable) {
-        this.variable = variable;
+    public void setVariablePowerMap(Map<String, Integer> variablePowerMap) {
+        this.variablePowerMap = variablePowerMap;
     }
     
-    public int getPower() {
-        return power;
+    public int getNumberOfVariables() {
+        return variablePowerMap.keySet().size();
     }
     
-    public void setPower(int power) {
-        this.power = power;
+    public int getDegree() {
+        int degree = 0;
+        for (String variable : variablePowerMap.keySet()) {
+            degree += variablePowerMap.get(variable);
+        }
+        return degree;
     }
     
     @Override
     public String toString() {
-        String string = "";
+        String coefficientString = "";
+        String variablePowerMapString = "";
+        
         if (coefficient.isZero()) {
             return "0";
-        } else if (coefficient.isEqualTo(Fraction.ONE.negate())) {
-            string += "-";
-            if (power == 0) {
-                string += "1";
-            } else if (power == 1) {
-                string += variable;
-            } else {
-                string += variable + "^" + power;
-            }
-        } else if (coefficient.isEqualTo(Fraction.ONE)) {
-            if (power == 0) {
-                string += "1";
-            } else if (power == 1) {
-                string += variable;
-            } else {
-                string += variable + "^" + power;
-            }
-        } else {
-            string += coefficient;
+        }
+        
+        for (String variable : variablePowerMap.keySet()) {
+            int power = variablePowerMap.get(variable);
             if (power == 1) {
-                string += variable;
+                variablePowerMapString += variable;
             } else if (power != 0) {
-                string += variable + "^" + power;
+                variablePowerMapString += variable + "^" + power;
             }
         }
-        return string;
+        
+        if (variablePowerMapString.equals("")) {
+            coefficientString += coefficient;
+        } else {
+            if (coefficient.isEqualTo(Fraction.ONE.negate())) {
+                coefficientString += "-";
+            } else if (!coefficient.isEqualTo(Fraction.ONE)) {
+                coefficientString += coefficient;
+            }
+        }
+        return coefficientString + variablePowerMapString;
     }
     
     public Term negate() {
-        return new Term(coefficient.negate(), variable, power);
+        return new Term(coefficient.negate(), variablePowerMap);
     }
 }
