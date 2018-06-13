@@ -1,4 +1,3 @@
-@SuppressWarnings({"WeakerAccess", "unused"})
 
 public class Matrix {
     private int rows;
@@ -68,7 +67,7 @@ public class Matrix {
     public void addRows(int row, int addend) {
         Fraction[] newRow = new Fraction[columns];
         for (int i = 0; i < newRow.length; i++) {
-            newRow[i] = Fraction.add(getRow(row)[i], getRow(addend)[i]);
+            //newRow[i] = Fraction.add(getRow(row)[i], getRow(addend)[i]);
         }
         setRow(row, newRow);
     }
@@ -76,7 +75,7 @@ public class Matrix {
     public void addColumns(int column, int addend) {
         Fraction[] newColumn = new Fraction[rows];
         for (int i = 0; i < newColumn.length; i++) {
-            newColumn[i] = Fraction.add(getColumn(column)[i], getColumn(addend)[i]);
+            //newColumn[i] = Fraction.add(getColumn(column)[i], getColumn(addend)[i]);
         }
         setColumn(column, newColumn);
     }
@@ -84,7 +83,7 @@ public class Matrix {
     public void subtractRows(int row, int subtrahend) {
         Fraction[] newRow = new Fraction[columns];
         for (int i = 0; i < newRow.length; i++) {
-            newRow[i] = Fraction.subtract(getRow(row)[i], getRow(subtrahend)[i]);
+            //newRow[i] = Fraction.subtract(getRow(row)[i], getRow(subtrahend)[i]);
         }
         setRow(row, newRow);
     }
@@ -92,7 +91,7 @@ public class Matrix {
     public void subtractColumns(int column, int subtrahend) {
         Fraction[] newColumn = new Fraction[rows];
         for (int i = 0; i < newColumn.length; i++) {
-            newColumn[i] = Fraction.subtract(getColumn(column)[i], getColumn(subtrahend)[i]);
+            //newColumn[i] = Fraction.subtract(getColumn(column)[i], getColumn(subtrahend)[i]);
         }
         setColumn(column, newColumn);
     }
@@ -100,7 +99,7 @@ public class Matrix {
     public void multiplyRow(int row, Fraction scalar) {
         Fraction[] newRow = getRow(row);
         for (int i = 0; i < newRow.length; i++) {
-            newRow[i] = Fraction.multiply(newRow[i], scalar);
+            //newRow[i] = Fraction.multiply(newRow[i], scalar);
         }
         setRow(row, newRow);
     }
@@ -108,7 +107,7 @@ public class Matrix {
     public void multiplyColumn(int column, Fraction scalar) {
         Fraction[] newColumn = getColumn(column);
         for (int i = 0; i < newColumn.length; i++) {
-            newColumn[i] = Fraction.multiply(newColumn[i], scalar);
+            //newColumn[i] = Fraction.multiply(newColumn[i], scalar);
         }
         setColumn(column, newColumn);
     }

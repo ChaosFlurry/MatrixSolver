@@ -32,7 +32,7 @@ public class AugmentedMatrix {
         return s;
     }
     
-    public AugmentedMatrix solve() {
+    public AugmentedMatrix solve() throws InterruptedException {
         int currentRow;
         int currentColumn;
         
@@ -61,6 +61,7 @@ public class AugmentedMatrix {
                         m2.swapRow(currentRow, row);
                         System.out.println("R" + currentRow + "~" + "R" + row);
                         System.out.println(this);
+                        Thread.sleep(500);
                         break;
                     }
                 }
@@ -76,6 +77,7 @@ public class AugmentedMatrix {
                 m2.divideRow(row, coefficient);
                 System.out.println(coefficient.reciprocal() + " R" + row);
                 System.out.println(this);
+                Thread.sleep(500);
             }
             
             // Subtract the pivot row from all non-zero rows
@@ -91,6 +93,7 @@ public class AugmentedMatrix {
                 m2.subtractRows(row, currentRow);
                 System.out.println("R" + row + " - " + "R" + currentRow);
                 System.out.println(this);
+                Thread.sleep(500);
             }
         }
         
@@ -108,11 +111,13 @@ public class AugmentedMatrix {
                 m2.divideRow(row, coefficient);
                 System.out.println(coefficient.reciprocal() + " R" + row);
                 System.out.println(this);
+                Thread.sleep(500);
                 
                 m1.subtractRows(row, currentRow);
                 m2.subtractRows(row, currentRow);
                 System.out.println("R" + row + " - " + "R" + currentRow);
                 System.out.println(this);
+                Thread.sleep(500);
             }
         }
         
@@ -126,6 +131,7 @@ public class AugmentedMatrix {
             m2.divideRow(i, coefficient);
             System.out.println(coefficient.reciprocal() + " R" + i);
             System.out.println(this);
+            Thread.sleep(500);
         }
         return this;
     }
