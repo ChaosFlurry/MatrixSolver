@@ -17,35 +17,43 @@ public class Polynomial {
         this.terms = terms;
     }
     
-    /*
     public Polynomial add(Polynomial polynomial) {
-    
+        List<Term> newTerms = new ArrayList<>(this.terms);
+        newTerms.addAll(polynomial.getTerms());
+        return new Polynomial(newTerms);
     }
     
     public Polynomial subtract(Polynomial polynomial) {
-    
+        List<Term> newTerms = new ArrayList<>(this.terms);
+        for (Term term : polynomial.getTerms()) {
+            terms.add(term.negate());
+        }
+        return new Polynomial(newTerms);
     }
     
     public Polynomial multiply(Polynomial polynomial) {
-    
+        List<Term> newTerms = new ArrayList<>();
+        for (int i = 0; i < this.terms.size(); i++) {
+            for (int j = 0; j < polynomial.getTerms().size(); j++) {
+                newTerms.add(new Term(
+                        this.terms.get(i).getCoefficient(),
+                        this.terms.get(i).getVariable(),
+                        this.terms.get(i).getPower() + polynomial.getTerms().get(j).getPower()));
+                // TODO Remove variable field from Term (making everything single variabled)
+                // TODO Combine sort and simplify
+            }
+        }
+        return new Polynomial(newTerms);
     }
     
     public Polynomial divide(Polynomial polynomial) {
     
     }
     
-    public boolean containsTermOfDegree(int degree) {
-    
-    }
-    
-    public Term getTermOfDegree(int degree) {
-    
-    }
-    
     public Polynomial expand() {
     
     }
-    */
+    
     public Polynomial factor() {
         // TODO Figure out how to factor higher degree polynomials
         return null;

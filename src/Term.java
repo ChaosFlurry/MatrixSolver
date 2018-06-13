@@ -66,4 +66,8 @@ public class Term {
         }
         return string;
     }
+    
+    public Term negate() {
+        return new Term(coefficient.negate(), variable, power);
+    }
 }
