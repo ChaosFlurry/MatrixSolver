@@ -18,7 +18,7 @@ public class Fraction {
         return new Fraction(n, 1);
     }
     
-    public static Fraction parseFraction(String fraction) throws FractionFormatException {
+    public static Fraction parseFraction(String fraction) {
         fraction = fraction.trim();
         if (fraction.matches("^(-?\\d+)/(-?\\d+)$")) {
             int numerator = Integer.parseInt(fraction.split("/")[0]);
@@ -28,7 +28,8 @@ public class Fraction {
             }
             return new Fraction(numerator, denominator);
         } else {
-            throw new FractionFormatException("For input string: \"" + fraction + "\"");
+            // TODO come up with better way to handle exception
+            throw new IllegalArgumentException("Improper fraction for input string: \"" + fraction + "\"");
         }
     }
     

@@ -50,9 +50,17 @@ public class Term {
         for (String variable : variablePowerMap.keySet()) {
             int power = variablePowerMap.get(variable);
             if (power == 1) {
-                variablePowerMapString += variable;
+                if (variable.contains("+") || variable.contains("-")) {
+                    variablePowerMapString = "(" + variable + ")";
+                } else {
+                    variablePowerMapString += variable;
+                }
             } else if (power != 0) {
-                variablePowerMapString += variable + "^" + power;
+                if (variable.contains("+") || variable.contains("-")) {
+                    variablePowerMapString = "(" + variable + ")"+ "^" + power;
+                } else {
+                    variablePowerMapString += variable + "^" + power;
+                }
             }
         }
         
