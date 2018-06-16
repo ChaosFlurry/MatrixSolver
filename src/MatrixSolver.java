@@ -37,7 +37,7 @@ public class MatrixSolver {
         term3.put("y", 2);
         term3.put("z", 2);
         Map<String, Integer> term4 = new HashMap<>();
-        term4.put("2(x+1)5(x+1)+5(x^2(x-1)(x-3))-2", 2);
+        term4.put("(2(u-h)^2-2(u-h)(v-k)-(v-k)^2+6(u-h)-4(v-k)-8)", 1);
         Map<String, Integer> term5 = new HashMap<>();
         term5.put("", 0);
         Map<String, Integer> term6 = new HashMap<>();
@@ -62,6 +62,7 @@ public class MatrixSolver {
         List<Term> t3 = new ArrayList<>();
         t3.add(new Term(Fraction.ONE.multiply(1), term4));
         Polynomial p3 = new Polynomial(t3);
+        System.out.println(p3);
         System.out.println(p3.expand());
         //System.out.println(p3.expand());
         

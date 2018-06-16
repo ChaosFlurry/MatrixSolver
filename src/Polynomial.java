@@ -14,7 +14,7 @@ public class Polynomial {
         
         // TODO fix regex - x^2(x-1) - 2 is assumed to be a coefficient (quick fix in expand())
         // either safeguard dangling powers with brackets or enforce stricter notation with astrix to indicate multiplication
-        Pattern polynomialFormatPattern = Pattern.compile("^((-?\\d+|-?\\d+/\\d+)?([a-z](\\^\\d+)?)?)([+-](\\d+|\\d+/\\d+)?([a-z](\\^\\d+)?)?)*$");
+        Pattern polynomialFormatPattern = Pattern.compile("^((-?\\d+|-?\\d+/\\d+)?([a-z](\\^\\d+)?)*)([+-](\\d+|\\d+/\\d+)?([a-z](\\^\\d+)?)*)*$");
         Matcher polynomialFormatMatcher = polynomialFormatPattern.matcher(text);
         
         if (polynomialFormatMatcher.matches()) {
@@ -22,8 +22,13 @@ public class Polynomial {
             // group 2 - coefficient (optional)
             // group 3 - variable (optional - default blank)
             // group 4 - power (optional - default 1)
-            Pattern polynomialTermsPattern = Pattern.compile("(-)?(\\d+/\\d+|\\d+)?(?:([a-z])(?:\\^(\\d+))?)?");
+            Pattern polynomialTermsPattern = Pattern.compile("(-)?(\\d+/\\d+|\\d+)?((?:[a-z](?:\\^\\d+)?)+)?");
             Matcher polynomialTermsMatcher = polynomialTermsPattern.matcher(text);
+            
+            // group 1 - indv
+            // group 3 -
+                // if group 2 is not null
+                // add coefficient
             
             while (polynomialTermsMatcher.find()) {
                 if (polynomialTermsMatcher.group(0) != null) {
@@ -34,6 +39,7 @@ public class Polynomial {
                     Fraction coefficient = Fraction.ZERO;
                     String variable = "";
                     int power = 0;
+                    Map<String, Integer> variablePowerMap = new HashMap<>();
                     
                     if (polynomialTermsMatcher.group(2) != null) {
                         if (polynomialTermsMatcher.group(2).matches("\\d+")) {
@@ -42,32 +48,29 @@ public class Polynomial {
                             coefficient = Fraction.parseFraction(polynomialTermsMatcher.group(2));
                         }
                     }
-                    
-                    if (polynomialTermsMatcher.group(3) != null) {
-                        variable = polynomialTermsMatcher.group(3);
-                        if (polynomialTermsMatcher.group(2) == null) {
-                            coefficient = Fraction.ONE;
-                        }
-                    }
-                    
-                    if (polynomialTermsMatcher.group(4) != null) {
-                        power = Integer.parseInt(polynomialTermsMatcher.group(4));
-                    } else {
-                        if (!variable.equals("")) {
-                            power = 1;
-                        }
-                    }
-                    
+    
                     if (polynomialTermsMatcher.group(1) != null) {
                         if (polynomialTermsMatcher.group(1).equals("-")) {
                             coefficient = coefficient.negate();
                         }
                     }
                     
-                    Map<String, Integer> variablePowerMap = new HashMap<>();
-                    variablePowerMap.put(variable, power);
-                    Term term = new Term(coefficient, variablePowerMap);
-                    terms.add(term);
+                    if (polynomialTermsMatcher.group(3) != null) {
+                        Pattern variablePowerPattern = Pattern.compile("([a-z])(?:\\^(\\d+))?");
+                        Matcher variablePowerMatcher = variablePowerPattern.matcher(polynomialTermsMatcher.group(3));
+    
+                        while (variablePowerMatcher.find()) {
+                            if (variablePowerMatcher.group(2) != null) {
+                                power = Integer.parseInt(variablePowerMatcher.group(2));
+                            } else {
+                                power = 1;
+                            }
+                            variable = variablePowerMatcher.group(1);
+                            variablePowerMap.put(variable, power);
+                        }
+                        Term term = new Term(coefficient, variablePowerMap);
+                        terms.add(term);
+                    }
                 }
             }
         } else {
@@ -284,14 +287,16 @@ public class Polynomial {
             } else {
                 polynomialString = polynomialString.substring(0, matchStart) + "[" + expansion.toString() + "]" + polynomialString.substring(matchEnd);
             }
-            
+            System.out.println("p str: " + polynomialString);
             Pattern multiplyPattern = Pattern.compile("(\\[(.+?)\\]\\[(.+?)\\])");
             Matcher multiplyMatcher = multiplyPattern.matcher(polynomialString);
             
             while (multiplyMatcher.find()) {
+                System.out.println("g2: " + multiplyMatcher.group(2));
+                System.out.println("g3: " + multiplyMatcher.group(3));
                 Polynomial p1 = Polynomial.parsePolynomial(multiplyMatcher.group(2));
                 Polynomial p2 = Polynomial.parsePolynomial(multiplyMatcher.group(3));
-                
+
                 Polynomial multiplied = p1.multiply(p2);
                 
                 matchStart = multiplyMatcher.start(1);
